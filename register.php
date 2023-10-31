@@ -13,17 +13,17 @@ $errors = array();
 		require('mysqli_connect.php'); // Connect to the db.
 
 		// Check for a first name:
-		if (empty($_POST['first_name'])) {
-			$errors[] = 'You forgot to enter your first name.';
+		if (empty($_POST['displayName'])) {
+			$errors[] = 'You forgot to enter your display name.';
 		} else {
-			$fname = mysqli_real_escape_string($dbc, trim($_POST['first_name']));
+			$displayName = mysqli_real_escape_string($dbc, trim($_POST['displayName']));
 		}
 
 		// Check for a last name:
-		if (empty($_POST['last_name'])) {
-			$errors[] = 'You forgot to enter your last name.';
+		if (empty($_POST['username'])) {
+			$errors[] = 'You forgot to enter your username.';
 		} else {
-			$lname = mysqli_real_escape_string($dbc, trim($_POST['last_name']));
+			$username = mysqli_real_escape_string($dbc, trim($_POST['username']));
 		}
 
 		// Check for an email address:
@@ -34,26 +34,33 @@ $errors = array();
 		}
 
 		// Check for a password and match against the confirmed password:
-		if (!empty($_POST['pass1'])) {
-			if ($_POST['pass1'] != $_POST['pass2']) {
+		if (!empty($_POST['password1'])) {
+			if ($_POST['password1'] != $_POST['password2']) {
 				$errors[] = 'Your password\'s do not match.';
 			} else {
-				$p = mysqli_real_escape_string($dbc, trim($_POST['pass1']));
+				$p = mysqli_real_escape_string($dbc, trim($_POST['password1']));
 			}
 		} else {
 			$errors[] = 'You forgot to enter your password.';
+		}
+
+		// check if email or username already exists
+		$query = "SELECT * FROM users WHERE email='$email' OR username='$username'";
+		$result = @mysqli_query($dbc, $query);
+		if (mysqli_num_rows($result) > 0) {
+			$errors[] = 'Email or username already exists.';
 		}
 
 		if (empty($errors)) {
 			// Register the user in the database...
 
 			// Make the query:
-			$query = "INSERT INTO users (first_name, last_name, email, pass) VALUES ('$fname', '$lname', '$email', SHA2('$p',256))";
+			$query = "INSERT INTO users (displayName, username, email, pass) VALUES ('$displayName', '$username', '$email', SHA2('$p',256))";
 			$result = @mysqli_query($dbc, $query); // Run the query.
 			if ($result) { // If it ran OK.
 				mysqli_close($dbc); // Close the database connection.
-				$fname = '';
-				$lname = '';
+				$displayName = '';
+				$username = '';
 				$email = '';
 				$p = '';
 	?>
@@ -68,10 +75,10 @@ $errors = array();
 	<div class="d-flex justify-content-center align-items-center">
 		<div class="container py-5">
 			<div class="row g-0">
-                <!-- <img src="/resources/logo.png" alt="login form" class="img-fluid align-middle" /> -->
+				<!-- <img src="/resources/logo.png" alt="signin form" class="img-fluid align-middle" /> -->
 				<div class="col-md-6 col-lg-7 d-flex align-items-center">
 					<div class="card-body p-4 p-lg-5 text-black">
-						<form>
+						<form action="register" method="post">
 							<div class="d-flex align-items-center mb-3 pb-1">
 								<i class="fas fa-cubes fa-2x me-3"></i>
 								<span class="h1 fw-bold mb-0">Rave Ramble</span>
@@ -95,7 +102,7 @@ $errors = array();
 							<div class="pt-1 mb-4">
 								<button class="btn btn-dark btn-lg btn-block" type="submit">Register</button>
 							</div>
-							<p class="mb-5 pb-lg-2" style="color: #393f81;">Already have an account? <a href="../login.php" style="color: #393f81;">Login</a></p>
+							<p class="mb-5 pb-lg-2" style="color: #393f81;">Already have an account? <a href="../signin.php" style="color: #393f81;">signin</a></p>
 							<a href="../terms.php" class="small text-muted">Terms of use.</a>
 							<a href="../privacy.php" class="small text-muted">Privacy policy</a>
 							<?php

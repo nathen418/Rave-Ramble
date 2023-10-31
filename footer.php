@@ -10,6 +10,7 @@
     <a class="small text-muted" href="../terms.php">Terms</a>
     <a class="small text-muted" href="../privacy.php">Privacy Policy</a>
     <a class="small text-muted" href="../cookies.php">Cookies Policy</a>
+    <a class="small text-muted"href="https://raveramble.com">RaveRamble.com</a>
   </div>
 </footer>
 </html>

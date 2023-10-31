@@ -2,7 +2,7 @@
 $page_title = "View Post | bLog";
 
 include('mysqli_connect.php');
-include('includes/login_functions.inc.php');
+include('includes/signin_functions.inc.php');
 // Get whatever information you need from either GET, SESSION, or POST
 $blogid = mysqli_real_escape_string($dbc, trim($_GET['blogpost_id']));
 $updateid = isset($_GET['update_id']) ? mysqli_real_escape_string($dbc, trim($_GET['update_id'])) : '';

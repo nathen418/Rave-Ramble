@@ -1,0 +1,22 @@
+fix signin and register errors
+prevent logging to echo out 
+
+
+create terms
+create privacy
+create about
+create logged out home
+create logged in home
+create explore page
+create settings page
+create profile page
+create profile edit modal
+create ticket search page
+create event browse page
+create create artist/user browse page
+
+
+integrate ticketmaster api
+integrate spotify api
+integrate apple music api (is this possible?)
+integrate google maps api for event locations

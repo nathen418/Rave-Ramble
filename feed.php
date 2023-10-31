@@ -1,12 +1,3 @@
-<?php # Script 12.1 - login_page.inc.php
-// This page prints any errors associated with logging in
-// and it creates the entire login page, including the form.
-
-// Include the header:
-$page_title = 'Home | Rave Ramble';
-include('header.php');
-?>
-
 <div class="card" style="">
   <div class="border border-left border-right px-0">
     <div class="p-3 border-bottom">
@@ -15,51 +6,54 @@ include('header.php');
       </h4>
     </div>
     <div>
-      <div class="card shadow-0">
-        <div class="card-body border-bottom pb-2">
-          <div class="d-flex">
-            <img src="/resources/jay.png" class="rounded-circle" height="50" alt="Avatar" loading="lazy" />
-            <div class="d-flex align-items-center w-100 ps-3">
-              <div class="w-100">
-                <input type="text" id="form143" class="form-control form-status border-0 py-1 px-0" placeholder="What's happening" />
+      <?php if ((isset($_SESSION['user_id']))) { ?>
+        <div class="card shadow-0"> <!-- New post bar -->
+          <div class="card-body border-bottom pb-2">
+            <div class="d-flex">
+              <img src="<?php echo $row["pfpURL"]; ?>" class="rounded-circle" height="50" alt="Avatar" loading="lazy" />
+              <div class="d-flex align-items-center w-100 ps-3">
+                <div class="w-100">
+                  <input type="text" id="newPost" class="form-control form-status border-0 py-1 px-0" placeholder="Ramble to your community" />
+                </div>
+              </div>
+            </div>
+            <div class="d-flex justify-content-between">
+              <ul class="list-unstyled d-flex flex-row ps-3 pt-3" style="margin-left: 50px;">
+                <li>
+                  <a href=""><i class="far fa-image pe-2"></i></a>
+                </li>
+                <li>
+                  <a href=""><i class="fas fa-photo-video px-2"></i></a>
+                </li>
+                <li>
+                  <a href=""><i class="fas fa-chart-bar px-2"></i></a>
+                </li>
+                <li>
+                  <a href=""><i class="far fa-smile px-2"></i></a>
+                </li>
+                <li>
+                  <a href=""><i class="far fa-calendar-check px-2"></i></a>
+                </li>
+              </ul>
+              <div class="d-flex align-items-center">
+                <button type="button" class="btn btn-primary btn-rounded">Ramble!</button>
               </div>
             </div>
           </div>
-          <div class="d-flex justify-content-between">
-            <ul class="list-unstyled d-flex flex-row ps-3 pt-3" style="margin-left: 50px;">
-              <li>
-                <a href=""><i class="far fa-image pe-2"></i></a>
-              </li>
-              <li>
-                <a href=""><i class="fas fa-photo-video px-2"></i></a>
-              </li>
-              <li>
-                <a href=""><i class="fas fa-chart-bar px-2"></i></a>
-              </li>
-              <li>
-                <a href=""><i class="far fa-smile px-2"></i></a>
-              </li>
-              <li>
-                <a href=""><i class="far fa-calendar-check px-2"></i></a>
-              </li>
-            </ul>
-            <div class="d-flex align-items-center">
-              <button type="button" class="btn btn-primary btn-rounded">Ramble</button>
-            </div>
-          </div>
         </div>
-      </div>
+      <?php } ?>
       <div>
-        <div class="d-flex p-3 border-bottom">
-          <img src="/resources/jay.png" class="rounded-circle" height="50" alt="Avatar" loading="lazy" />
+        <div class="d-flex p-3 border-bottom"> <!-- Post -->
+          <img src="<?php echo $row["pfpURL"]; ?>" class="rounded-circle" height="50" alt="Avatar" loading="lazy" />
           <div class="d-flex w-100 ps-3">
             <div>
               <a href="">
                 <h6 class="text-body">
-                  Prof J
-                  <span class="small text-muted font-weight-normal">@professorj</span>
+                  <?php echo $row['displayName']; ?>
+                  <span class="small text-muted font-weight-normal"><?php echo "@" + $row['username']; ?></span>
                   <span class="small text-muted font-weight-normal"> • </span>
-                  <span class="small text-muted font-weight-normal">2h</span>
+                  <span class="small text-muted font-weight-normal"><?php echo $row["post_timestamp"]; //! make this display the time delta
+                                                                    ?></span>
                   <span><i class="fas fa-angle-down float-end"></i></span>
                 </h6>
               </a>
@@ -75,6 +69,15 @@ include('header.php');
                 <li>
                   <i class="far fa-share-square"></i>
                 </li>
+                <?php
+                if (isset($_SESSION['user_id']) && $_SESSION['is_admin'] == 1) {
+                ?>
+                  <!-- Edit and Delete buttons for each posts if admin -->
+                  <a href=<?php echo "update.php?id=" . $row['blogpost_id']; ?> class="btn btn-warning">Edit</a>
+                  <a href=<?php echo "delete.php?id=" . $row['blogpost_id']; ?> class="btn btn-danger">Delete</a>
+                <?php
+                }
+                ?>
               </ul>
             </div>
           </div>
