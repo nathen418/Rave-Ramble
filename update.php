@@ -1,6 +1,6 @@
 <?php
 include('./includes/non_admin_redirect.inc.php');
-$page_title = 'Edit Post | bLog';
+$page_title = 'Edit Post | Rave Ramble';
 include('mysqli_connect.php');
 $errors = array();
 

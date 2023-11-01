@@ -1,5 +1,7 @@
 fix signin and register errors
 prevent logging to echo out 
+enable deleting posts
+
 
 
 create terms
@@ -20,3 +22,6 @@ integrate ticketmaster api
 integrate spotify api
 integrate apple music api (is this possible?)
 integrate google maps api for event locations
+
+
+keep track and sell tickets

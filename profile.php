@@ -1,122 +1,135 @@
 <?php
-//header
-$page_title = 'Home | bLog';
-include('header.php');
-include('mysqli_connect.php');
-?>
-<p class="h2 text-center text-white" style="margin-top:4rem">bLog</p>
-<p class="h4 text-center text-white">The less useful version of wordpress</p>
-<?php
 
-// Code to handle pagination
-$display = 5;
-// Determine how many pages there are...
-if (isset($_GET['p']) && is_numeric($_GET['p'])) { // Already been determined.
-	$pages = $_GET['p'];
+require('mysqli_connect.php');
+require('includes/signin_functions.inc.php');
+$errors = array();
+
+// check if the user exists in the database
+$query = "SELECT * FROM users WHERE username = \"" . str_replace("/@", "", $_SERVER['REQUEST_URI']) . "\"";
+$result = @mysqli_query($dbc, $query);
+if (mysqli_num_rows($result) == 1) {
+	$page_title = str_replace("/", "", $_SERVER['REQUEST_URI']);
+	include('header.php');
+	$row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+	$displayName = $row['displayName'];
+	$username = $row['username'];
+	$email = $row['email'];
+	$isAdmin = $row['isAdmin'];
+	$user_id = $row['user_id'];
 } else {
-	// Count the number of records:
-	$query = "SELECT COUNT(blogpost_id) FROM blogposts";
-	$result = mysqli_query($dbc, $query);
-	$rowPage = mysqli_fetch_array($result, MYSQLI_NUM);
-	$records = $rowPage[0];
-
-	// Calculate the number of pages...
-	if ($records > $display) {
-		$pages = ceil($records / $display);
-	} else {
-		$pages = 1;
-	}
+	redirect_user('home.php');
 }
 
-// Determine where in the database to start returning results...
-if (isset($_GET['s']) && is_numeric($_GET['s'])) {
-	$start = $_GET['s'];
-} else {
-	$start = 0;
-}
-
-// Determine the sort...
-// Default is by registration date.
-$sort = (isset($_GET['sort'])) ? $_GET['sort'] : 'date';
-
-// Determine the sorting order:
-switch ($sort) {
-	case 'recent':
-		$order_by = 'blogpost_timestamp DESC';
-		break;
-	case 'oldest':
-		$order_by = 'blogpost_timestamp ASC';
-		break;
-	default:
-		$order_by = 'blogpost_timestamp DESC';
-		$sort = 'recent';
-		break;
-}
 ?>
 
-<!-- Sort Menu -->
-<div class="text-white" id="sort">
-	<strong>Sort By:</strong>
-	<a href="?sort=recent" class="btn btn-primary">Newest</a> |
-	<a href="?sort=oldest" class="btn btn-primary">Oldest</a>
+<div class="container-fluid">
+    <div class="row">
+        <nav id="left-sidebar" class="d-md-block col-md-2 bg-light sidebar sticky-top">
+            <div class="position-sticky">
+                <div class="text-center mt-3">
+                    <img src="/resources/logo.png" alt="RaveRamble Logo" width="100" height="100">
+                    <h4 class="mt-2">RaveRamble</h4>
+                </div>
+
+                <form class="mt-3">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search...">
+                        <button type="submit" class="btn btn-primary">Search</button>
+                    </div>
+                </form>
+
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">
+                            <i class="fas fa-house"></i>
+                            Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fas fa-magnifying-glass"></i>
+                            Explore
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fas fa-headphones-simple"></i>
+                            Listening Activity
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fas fa-users"></i>
+                            Community
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fas fa-location-dot"></i>
+                            Nearby Concerts & Shows
+                        </a>
+                    </li>
+                </ul>
+                <!-- Include the dropdown button at the bottom of the sidebar. show only if logged in-->
+                <?php if((isset($_SESSION['user_id']))){ ?>
+                <div class="dropdown mt-auto">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <!-- Fix the dropdown and pin to bottom of navbar -->
+                        <i class="fa-solid fa-gear"></i>
+                        Your Profile
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <li><a class="dropdown-item" href="#">Action</a></li>
+                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    </ul>
+                </div>
+                <?php } else {?>
+                    <a class="btn btn-primary" href="/signin.php" role="button">Sign In</a>
+                <a class="btn btn-secondary" href="/register.php" role="button">Register</a>
+                <?php } ?>
+            </div>
+        </nav>
+
+        <!-- Page Content -->
+        <div class="col-md-8">
+
+            <?php 
+            // Get feed from database
+            $query = "SELECT * FROM posts JOIN users USING (user_id) ORDER BY post_timestamp DESC";
+            $result = mysqli_query($dbc, $query);
+            if (mysqli_num_rows($result) > 0) {
+                include('user.php');
+            }
+            ?>
+        </div>
+
+        <!-- Right sidebar -->
+        <nav id="right-sidebar" class="d-md-block d-flex col-md-2 bg-light sidebar sticky-top">
+            <div class="position-sticky">
+                <!-- Include the dropdown button at the bottom of the sidebar -->
+                <div class="card mt-4">
+                    <div class="card-body">
+                        <h5 class="card-title">What's Happening Near You</h5>
+                        <ul>
+                            <li>Event 1: <?php // Get events?></li>
+                            <li>Event 2: <?php // Get events?></li>
+                            <li>Event 3: <?php // Get events?></li>
+                            <li>Event 4: <?php // Get events?></li>
+                            <li>Event 5: <?php // Get events?></li>
+                            <li>Event 6: <?php // Get events?></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card mt-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Suggested Community Members  & Artists</h5>
+                        <ul>
+                            <!-- put some people here. idk -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
 </div>
-<?php
-
-// Fetch all the blogposts
-$query = "SELECT * FROM blogposts JOIN users USING (user_id) ORDER BY $order_by LIMIT $start, $display";
-$results = mysqli_query($dbc, $query);
-
-// Loop Through the blogposts and create cards for them
-while ($row = mysqli_fetch_array($results, MYSQLI_ASSOC)) {
-?>
-
-	<div class="card bg-dark text-white p-1" , style="margin-top:1rem">
-		<div class="card-body">
-			<h5 class="card-title"><?php echo $row['blogpost_title']; ?> | By: <?php echo $row['first_name']; ?></h5>
-			<p class="card-text"><?php echo $row['blogpost_body']; ?></p>
-			<a href=<?php echo "comments.php?blogpost_id=" . $row['blogpost_id']; ?> class="btn btn-success">View Post</a>
-
-			<?php
-			if (isset($_SESSION['user_id']) && $_SESSION['is_admin'] == 1) {
-			?>
-				<!-- Edit and Delete buttons for each posts if admin -->
-				<a href=<?php echo "update.php?id=" . $row['blogpost_id']; ?> class="btn btn-warning">Edit</a>
-				<a href=<?php echo "delete.php?id=" . $row['blogpost_id']; ?> class="btn btn-danger">Delete</a>
-			<?php
-			}
-			?>
-		</div>
-	</div>
-
-<?php
-}
-
-// Make the links to other pages, if necessary.
-if ($pages > 1) {
-	echo '<br /><div id="pages-container"><p>';
-	$current_page = ($start / $display) + 1;
-
-	// If it's not the first page, make a Previous button:
-	if ($current_page != 1) {
-		echo '<a href="?s=' . ($start - $display) . '&p=' . $pages . '&sort=' . $sort . '"><button type="button" class="btn btn-dark">Previous</button></a> ';
-	}
-
-	// Make all the numbered pages:
-	for ($i = 1; $i <= $pages; $i++) {
-		if ($i != $current_page) {
-			echo '<a href="?s=' . (($display * ($i - 1))) . '&p=' . $pages . '&sort=' . $sort . '"><button type="button" class="btn btn-dark">' . $i . '</button></a> ';
-		} else {
-			echo '<button type="button" class="btn btn-dark" disabled>' . $i . '</button> ';
-		}
-	}
-
-	// If it's not the last page, make a Next button:
-	if ($current_page != $pages) {
-		echo '<a href="?s=' . ($start + $display) . '&p=' . $pages . '&sort=' . $sort . '"><button type="button" class="btn btn-dark">Next</button></a>';
-	}
-
-	echo '</p></div>';
-
-}
-include('footer.php');
-?>

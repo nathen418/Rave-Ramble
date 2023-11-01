@@ -1,5 +1,5 @@
 <?php
-$page_title = "View Post | bLog";
+$page_title = "View Post | Rave Ramble";
 
 include('mysqli_connect.php');
 include('includes/signin_functions.inc.php');
@@ -17,7 +17,7 @@ if (isset($_GET['delete_id'])) {
     $result = mysqli_query($dbc, $query);
 
     while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
-        if (isset($_SESSION['user_id']) && ($_SESSION['user_id'] == $row['user_id'] || $_SESSION['is_admin'] == 1)) {
+        if (isset($_SESSION['user_id']) && ($_SESSION['user_id'] == $row['user_id'] || $_SESSION['isAdmin'] == 1)) {
             // Only the author of the comment or admin can delete
             $deleteQuery = "DELETE FROM comments WHERE comment_id = '$deleteid'";
             mysqli_query($dbc, $deleteQuery);
@@ -142,7 +142,7 @@ while ($row = mysqli_fetch_array($blogpostResult, MYSQLI_ASSOC)) {
                     <?php
                     if (
                         isset($_SESSION['user_id']) && isset($updateid) && $row['comment_id'] == $updateid &&
-                        ($_SESSION['is_admin'] == 1 || $_SESSION['user_id'] == $row['user_id'])
+                        ($_SESSION['isAdmin'] == 1 || $_SESSION['user_id'] == $row['user_id'])
                     ) {
                     ?>
                         <form style="margin-top:2rem" action=<?php echo "comments?blogpost_id=" . $row['blogpost_id']; ?> method="post">
@@ -158,11 +158,11 @@ while ($row = mysqli_fetch_array($blogpostResult, MYSQLI_ASSOC)) {
                         } else {
                             ?>
                                 <h5 class="card-title"><?php echo $row['first_name'];
-                                                        if ($row['is_admin'] == 1) echo '  <span style="color: red;">(Admin)</span>'; ?></h5>
+                                                        if ($row['isAdmin'] == 1) echo '  <span style="color: red;">(Admin)</span>'; ?></h5>
                                 <p class="card-text"><?php echo $row['comment_body']; ?></p>
 
                                 <?php
-                                if (isset($_SESSION['user_id']) && ($_SESSION['is_admin'] == 1 || $_SESSION['user_id'] == $row['user_id'])) {
+                                if (isset($_SESSION['user_id']) && ($_SESSION['isAdmin'] == 1 || $_SESSION['user_id'] == $row['user_id'])) {
                                 ?>
                                     <a href=<?php echo "comments?blogpost_id=" . $row['blogpost_id'] . "&update_id=" . $row['comment_id']; ?> class="btn btn-warning">Edit</a>
                                     <a href=<?php echo "comments?blogpost_id=" . $row['blogpost_id'] . "&delete_id=" . $row['comment_id']; ?> class="btn btn-danger">Delete</a>

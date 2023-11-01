@@ -5,7 +5,7 @@
  * The function takes one argument: the page to be redirected to.
  * The argument defaults to index.php.
  */
-function redirect_user ($page = 'index.php') {
+function redirect_user ($page = 'home.php') {
 
 	// Start defining the URL...
 	// URL is https:// plus the host name plus the current directory:
@@ -52,11 +52,11 @@ function check_signin($dbc, $email = '', $pass = '') {
 	if (empty($errors)) { // If everything's OK.
 
 		// Retrieve the user_id and username for that email/password combination:
-		$query = "SELECT user_id, username, is_admin FROM users WHERE email='$email' AND pass=SHA2('$p',256)";		
+		$query = "SELECT user_id, username, displayName, isAdmin FROM users WHERE email='$email' AND pass=SHA2('$p',256)";		
 		$result = @mysqli_query($dbc, $query); // Run the query.
 		
 		// Check the result:
-		if (mysqli_num_rows($result) == 1) { //!why is this failing? 
+		if (mysqli_num_rows($result) == 1) {
 
 			// Fetch the record:
 			$row = mysqli_fetch_array ($result, MYSQLI_ASSOC);

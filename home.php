@@ -1,14 +1,14 @@
 <?php
 $page_title = 'Home | RaveRamble';
 include('header.php');
+require('mysqli_connect.php');
 $errors = array();
 ?>
 
 <div class="container-fluid">
     <div class="row">
-        <nav id="left-sidebar" class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
+        <nav id="left-sidebar" class="d-md-block col-md-2 bg-light sidebar sticky-top">
             <div class="position-sticky">
-                <!-- Add the logo and app name here -->
                 <div class="text-center mt-3">
                     <img src="/resources/logo.png" alt="RaveRamble Logo" width="100" height="100">
                     <h4 class="mt-2">RaveRamble</h4>
@@ -75,12 +75,22 @@ $errors = array();
         </nav>
 
         <!-- Page Content -->
-        <main class="col-md-6 ms-sm-auto col-lg-8 px-md-4">
-            <?php //include('feed.php');?>
-        </main>
+        <div class="col-md-8">
+
+            <?php 
+            // Get feed from database
+            $query = "SELECT * FROM posts JOIN users USING (user_id) ORDER BY post_timestamp DESC";
+            $result = mysqli_query($dbc, $query);
+            if (mysqli_num_rows($result) > 0) {
+                include('feed.php');
+            } else {
+                echo "Error: There are no posts";
+            }
+            ?>
+        </div>
 
         <!-- Right sidebar -->
-        <nav id="right-sidebar" class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
+        <nav id="right-sidebar" class="d-md-block d-flex col-md-2 bg-light sidebar sticky-top">
             <div class="position-sticky">
                 <!-- Include the dropdown button at the bottom of the sidebar -->
                 <div class="card mt-4">
@@ -108,5 +118,6 @@ $errors = array();
         </nav>
     </div>
 </div>
+
 
 <?php include('footer.php'); ?>

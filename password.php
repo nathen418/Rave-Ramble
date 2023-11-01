@@ -1,7 +1,7 @@
 <?php # Script 9.7 - password.php
 // This page lets a user change their password.
 
-$page_title = 'Change Password | bLog';
+$page_title = 'Change Password | Rave Ramble';
 include('./includes/non_admin_redirect.inc.php');
 $errors = array();
 

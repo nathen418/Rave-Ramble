@@ -1,6 +1,6 @@
 <?php
 include('./includes/non_admin_redirect.inc.php');
-$page_title = 'Admin Panel | bLog';
+$page_title = 'Admin Panel | Rave Ramble';
 include('header.php');
 ?>
 

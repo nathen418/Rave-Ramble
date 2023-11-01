@@ -15,12 +15,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	if ($check) { // OK!
 		
 		// Set the session data:
-		// session_start();
+		session_start();
 		$_SESSION['user_id'] = $data['user_id'];
 		$_SESSION['username'] = $data['username'];
-		$_SESSION['is_admin'] = $data['is_admin'];
-		// Store the HTTP_USER_AGENT:
+		$_SESSION['displayName'] = $data['displayName'];
+		$_SESSION['isAdmin'] = $data['isAdmin'];
 		$_SESSION['agent'] = md5($_SERVER['HTTP_USER_AGENT']);
+
+		// Store the loginDate
+		$query = "UPDATE users SET loginDate = NOW() WHERE user_id = " . $_SESSION['user_id']. ""; //! fix this
+
+		// create a post
+		// $query = "INSERT INTO posts (user_id, post_text, post_timestamp) VALUES (" . $_SESSION['user_id'] . ", 'Welcome to Rave Ramble!', NOW())";
+
 
 		// Redirect:
 		redirect_user('home.php');

@@ -20,12 +20,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $commemtResults = mysqli_query($dbc, $deleteComments);
         $results = mysqli_query($dbc, $delete);
         // Set the session message to let the user know if it was deleted successfully
-        $_SESSION['message'] = "Blog post successfully deleted!";
+        $_SESSION['message'] = "Rave Ramble post successfully deleted!";
     } else {
         redirect_user();
     }
 }
-$page_title = 'Delete Post | bLog';
+$page_title = 'Delete Post | Rave Ramble';
 include('header.php');
 
 
@@ -55,7 +55,7 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
                         <!-- Show the default card where the user hasn't selected the confirm delete button -->
                         <div class="card bg-dark text-white" style="border-radius: 1rem;">
                             <div class="card-body p-5 text-center">
-                                <h2 class="fw-bold mb-2 text-uppercase">Delete Blog Post</h2>
+                                <h2 class="fw-bold mb-2 text-uppercase">Delete Rave Ramble Post</h2>
                                 <p class="text-white-50">Are you sure you want to delete this post?</p>
 
                                 <div class="form-outline form-white mb-4">

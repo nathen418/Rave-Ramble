@@ -19,15 +19,33 @@
 	<meta canonical href="https://raveramble.com">
 
 	<style>
-		#sort {
-			text-align: center;
-		}
-
 		body {
+			display: flex;
+			flex-direction: row;
+			 justify-content: space-between;
+			/* other styles */
 			background: #ced4da;
 			height: 100%;
-			/* overflow: hidden */
 		}
+
+		#left-sidebar{
+			flex: 1;
+			width: 20vw;
+			height: 100vh;
+			position: sticky;
+			/* other styles */
+		}
+		#right-sidebar {
+			flex: 1;
+			width: 20vw;
+			height: 100vh;
+			position: sticky;
+			/* other styles */
+		}
+
+		/* .sidebar {
+			position: sticky;
+		} */
 
 		footer {
 			position: fixed;
@@ -35,10 +53,23 @@
 			width: 100%;
 		}
 
-		html {
-			min-height: 100%;
-			/* make sure it is at least as tall as the viewport */
-			position: relative;
+		alert-position {
+			position: fixed;
+			top: 0;
+			width: 100%;
+		}
+
+		main {
+			height: 100vh;
+			/* 100% of the viewport height */
+			overflow-y: auto;
+			/* Enable vertical scrolling when the content exceeds the height */
+		}
+
+		.post-container {
+			max-height: 100vh;
+			/* Adjust the height as needed */
+			overflow-y: auto;
 		}
 
 		.card-body {
@@ -48,16 +79,6 @@
 
 		.btn-dark {
 			background-color: #7151a9;
-		}
-
-		#left-sidebar {
-			height: 100vh;
-			/* 100% of the viewport height */
-		}
-
-		#right-sidebar {
-			height: 100vh;
-			/* 100% of the viewport height */
 		}
 
 		.btn-primary {

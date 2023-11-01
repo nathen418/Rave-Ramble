@@ -1,7 +1,7 @@
 <?php
 // This script performs an INSERT query to add a record to the users table.
 
-$page_title = 'Register | bLog';
+$page_title = 'Register | Rave Ramble';
 include('header.php');
 $errors = array();
 ?>
@@ -64,11 +64,19 @@ $errors = array();
 				$email = '';
 				$p = '';
 	?>
-				<div class="alert alert-success text-center">
+				<div class="alert alert-success text-center alert-position">
 					<p>Account has been created, you can now log in!
 				</div>
 	<?php
 			}
+		}
+		// Print any error messages, if they exist:
+		if (isset($errors) && !empty($errors)) {
+			echo '<div class="alert alert-danger text-center alert-position">';
+			foreach ($errors as $msg) {
+				echo " - $msg<br />\n";
+			}
+			echo '</div>';
 		}
 	}
 	?>
@@ -102,19 +110,8 @@ $errors = array();
 							<div class="pt-1 mb-4">
 								<button class="btn btn-dark btn-lg btn-block" type="submit">Register</button>
 							</div>
-							<p class="mb-5 pb-lg-2" style="color: #393f81;">Already have an account? <a href="../signin.php" style="color: #393f81;">signin</a></p>
-							<a href="../terms.php" class="small text-muted">Terms of use.</a>
-							<a href="../privacy.php" class="small text-muted">Privacy policy</a>
-							<?php
-							// Print any error messages, if they exist:
-							if (isset($errors) && !empty($errors)) {
-								echo '<h5>Error!</h5>
-                            <p class="error">The following error(s) occurred:<br />';
-								foreach ($errors as $msg) {
-									echo " - $msg<br />\n";
-								}
-							}
-							?>
+							<p class="mb-5 pb-lg-2">Already have an account? <a href="../signin.php" style="color: #393f81;">signin</a></p>
+
 						</form>
 					</div>
 				</div>
