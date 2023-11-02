@@ -19,6 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$_SESSION['user_id'] = $data['user_id'];
 		$_SESSION['username'] = $data['username'];
 		$_SESSION['displayName'] = $data['displayName'];
+		$_SESSION['pfpURL'] = $data['pfpURL'];
 		$_SESSION['isAdmin'] = $data['isAdmin'];
 		$_SESSION['agent'] = md5($_SERVER['HTTP_USER_AGENT']);
 

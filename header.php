@@ -1,4 +1,6 @@
-<?php session_start(); ?>
+<?php 
+date_default_timezone_set('CDT');
+session_start(); ?>
 <!DOCTYPE html">
 
 <head>
@@ -18,7 +20,73 @@
 	<meta property="theme-color" content="#6761A8">
 	<meta canonical href="https://raveramble.com">
 
+
 	<style>
+		::-webkit-scrollbar {
+			display: none;
+		
+		}
+
+		body {
+			background-color: black;
+		}
+
+		.row>* {
+			padding-right: 1px;
+			padding-left: 1px;
+		}
+
+		#left-sidebar,
+		#right-sidebar {
+			height: 100vh;
+			position: sticky;
+			overflow: hidden;
+			background-color: black;
+		}
+
+		footer {
+			position: fixed;
+			bottom: 0;
+			width: 100%;
+			background-color: black;
+		}
+		.sidebar {
+			background-color: black;
+		}
+
+		#post-card {
+			background-color: #16181c;
+			color: white;
+			border-radius: 10px
+		}
+		#ramble-card{ 
+			background-color: #16181c;
+			color: white;
+			border-radius: 10px
+
+		}
+		#suggested-follow-card {
+			background-color: #16181c;
+			color: white;
+			border-radius: 10px
+		}
+		#events-card {
+			background-color: #16181c;
+			color: white;
+			border-radius: 10px
+		}
+		.btn-primary {
+			background-color: #7151a9;
+			border: none;
+		}
+		.username {
+			color: white;
+		}
+		a {
+			text-decoration: none;
+		}
+	</style>
+	<!-- <style>
 		body {
 			display: flex;
 			flex-direction: row;
@@ -43,15 +111,8 @@
 			/* other styles */
 		}
 
-		/* .sidebar {
-			position: sticky;
-		} */
 
-		footer {
-			position: fixed;
-			bottom: 0;
-			width: 100%;
-		}
+		
 
 		alert-position {
 			position: fixed;
@@ -84,8 +145,7 @@
 		.btn-primary {
 			background-color: #7151a9;
 		}
-	</style>
-
+	</style> -->
 </head>
 
 <body>
