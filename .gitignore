@@ -1,1 +1,3 @@
 mysqli_connect.php
+.env
+vendor

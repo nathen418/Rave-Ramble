@@ -8,14 +8,14 @@ include('header.php');
 <form action="signin" method="post">
     <div class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
 
-        <div class=" container py-5">
+        <div class="container py-5">
             <!-- create 2 columns. one has the logo centered left, and the right column has the signin prompt -->
             <div class="row g-0">
                 <div class="col-md-6 col-lg-5 d-none d-md-block">
                     <img src="/resources/logo.png" alt="signin form" class="img-fluid align-middle" style="border-radius: 1rem 0 0 1rem;" />
                 </div>
                 <div class="col-md-6 col-lg-7 d-flex align-items-center">
-                    <div class="card-body p-4 p-lg-5 text-black">
+                    <div id="signin-card" class="card-body p-4 p-lg-5">
 
                         <form action="signin" method="post">
 

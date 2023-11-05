@@ -1,0 +1,7 @@
+{
+    "platform-check": false,
+    "require": {
+        "jwilsson/spotify-web-api-php": "5.7.1",
+        "vlucas/phpdotenv": "^5.5"
+    }
+}
