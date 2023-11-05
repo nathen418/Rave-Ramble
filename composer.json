@@ -1,4 +1,6 @@
 {
+    "name" : "Rave Ramble",
+    "description" : "A brand new music social platform",
     "platform-check": false,
     "require": {
         "jwilsson/spotify-web-api-php": "5.7.1",
