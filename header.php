@@ -1,6 +1,10 @@
 <?php
 date_default_timezone_set('CDT');
-session_start(); ?>
+session_start(); 
+require("./vendor/autoload.php");
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+?>
 <!DOCTYPE html">
 
 <head>
@@ -72,6 +76,11 @@ session_start(); ?>
 		}
 
 		#signin-card {
+			background-color: #16181c;
+			color: white;
+			border-radius: 10px
+		}
+		#register-card {
 			background-color: #16181c;
 			color: white;
 			border-radius: 10px

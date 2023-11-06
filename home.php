@@ -3,8 +3,8 @@
 
 //     header('Location: https://' . $_SERVER['HTTP_HOST'] . '/signin.php');
 // }
-include('header.php');
 require('./spotify/app.php');
+include('header.php');
 $page_title = 'Home | RaveRamble';
 require('mysqli_connect.php');
 $errors = array();
@@ -87,14 +87,24 @@ $errors = array();
     </div>
     <div class="col">
         <div id="post-card" class="card-body mt-4 mb-3 ms-2 me-2" style="border-radius: 18px">
+            <p> Testing Top artists embed: </p>
             <div class="mb-3 align-center" style="display: flex; align-items: center;">
-            Have some sort of stats here?
+            <br>
             <?php
-            echo $topArtists = getSpotifyTop($api, 'artists', ['limit' => 10]); 
+
+            $topArtists = getSpotifyTop($api, 'artists', ['limit' => 4]);
+            for ($i = 0; $i < 4; $i++) {
+                echo "<div class=\"col align-center \">";
+                echo "<img src=\"" . $topArtists[1][$i] . "\" height=\"50\" loading=\"lazy\" />";
+                echo $topArtists[0][$i];
+                echo "</div>";
+            } 
             ?>
-           <br>
-           <br>
-           <br>
+            
+            
+            
+            
+            
             </div>
         </div>
         <?php
@@ -109,28 +119,9 @@ $errors = array();
     <div class="col-3">
         <nav id="right-sidebar" class=" text-dark sidebar sticky-top ms-3 me-2 mt-2">
             <div class="position-sticky">
-                <?php if ((isset($_SESSION['user_id']))) { ?>
-                    <div id="ramble-card" class="card-body mt-3">
-                        <div class="mb-3" style="display: flex; align-items: center;">
-                            <img src="<?php echo $_SESSION["pfpURL"]; ?>" class="rounded-circle" height="50" alt="Avatar" loading="lazy" />
-                            <div style="margin-left: 10px;">
-                                <a class="username" href="<?php echo "/@" . $_SESSION['username']; ?>">
-                                    <h6>
-                                        <?php echo $_SESSION['displayName']; ?>
-                                    </h6>
-                                    <span class="small font-weight-normal"><?php echo "@" . $_SESSION['username']; ?></span>
-                                </a>
-                            </div>
-                        </div>
-                        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Ramble about it">
-                        <div class="mt-3 mb-3">
-                            <textarea class="form-control" id="link" placeholder="Attach a Spotify or Apple Music link here" rows="3"></textarea>
-                        </div>
-                        <button type="button" class="btn btn-primary btn-rounded">Ramble!</button>
-                    </div>
-
-                <?php } ?>
-                <!-- Include the dropdown button at the bottom of the sidebar -->
+                <?php if ((isset($_SESSION['user_id']))) { 
+                    include('postbox.php');
+                } ?>
                 <div id="events-card" class="card-body mt-3" style="border-radius: 10px">
                     <h5 class="card-title">What's Happening Near You</h5>
                     <ul>

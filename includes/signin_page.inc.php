@@ -1,6 +1,6 @@
 <?php
 // Include the header:
-$page_title = 'signin | Rave Ramble';
+$page_title = 'Sign In | Rave Ramble';
 include('header.php');
 ?>
 

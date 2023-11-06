@@ -1,5 +1,7 @@
 <?php
-require '../vendor/autoload.php';
+require $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
+$dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__));
+$dotenv->load();
 session_start();
 if (!array_key_exists('user_id', $_SESSION)) {
     echo 'no user id';
@@ -22,7 +24,6 @@ $options = [
         'user-read-private',
         'user-top-read',
         'user-read-email',
-
     ],
     'state' => $_SESSION['spotifyState'],
 ];

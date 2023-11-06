@@ -7,6 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 	// Need two helper files:
 	require ('includes/signin_functions.inc.php');
+	require $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 	require ('mysqli_connect.php');
 		
 	// Check the signin:
@@ -22,13 +23,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$_SESSION['pfpURL'] = $data['pfpURL'];
 		$_SESSION['isAdmin'] = $data['isAdmin'];
 		$_SESSION['agent'] = md5($_SERVER['HTTP_USER_AGENT']);
+		$_SESSION['spotifyRefreshToken'] = $data['spotify_refresh_token'];
 
 		// Store the loginDate
 		$query = "UPDATE users SET loginDate = NOW() WHERE user_id = " . $_SESSION['user_id']. ""; //! fix this
 
-		// create a post
-		// $query = "INSERT INTO posts (user_id, post_text, post_timestamp) VALUES (" . $_SESSION['user_id'] . ", 'Welcome to Rave Ramble!', NOW())";
-
+		// refresh spotify access token as needed
+		$session = new SpotifyWebAPI\Session(
+			$_ENV['SPOTIFY_CLIENT_ID'],
+			$_ENV['SPOTIFY_CLIENT_SECRET'],
+			$_ENV['SPOTIFY_REDIRECT_URI']
+		);
+		if (!isset($_SESSION['spotifyAccessToken'])) {
+			header( 'Location: https://' . $_SERVER['HTTP_HOST'] . '/spotify/auth.php');
+		} 
+		$session->refreshAccessToken($_SESSION['spotifyRefreshToken']);
+		$newAccessToken = $session->getAccessToken();
+		$_SESSION['spotifyAccessToken'] = $newAccessToken;
+		
 
 		// Redirect:
 		redirect_user('home.php');

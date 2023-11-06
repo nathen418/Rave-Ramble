@@ -1,5 +1,8 @@
 <?php
-require '../vendor/autoload.php';
+require $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
+require('../mysqli_connect.php'); // Connect to the db.
+$dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__));
+$dotenv->load();
 session_start();
 if (!array_key_exists('user_id', $_SESSION)) {
     echo 'no user id';
@@ -23,14 +26,17 @@ if ($state !== $_SESSION['spotifyState']) {
 
 // Request a access token using the code from Spotify
 $session->requestAccessToken($_GET['code']);
-
 $accessToken = $session->getAccessToken();
 $_SESSION['spotifyAccessToken'] = $accessToken;
 $refreshToken = $session->getRefreshToken();
 
-// Store the access and refresh tokens somewhere. In a session for example
+// Store the access and refresh tokens in the db
+$query = "UPDATE `users` SET spotify_refresh_token = '$refreshToken' WHERE users.`user_id` = '$_SESSION[user_id]';";
+$result = @mysqli_query($dbc, $query);
+
+
 
 // Send the user along and fetch some data!
-header('Location: ../spotify/app.php');
+header('Location: ../home');
 die();
 ?>

@@ -52,7 +52,7 @@ function check_signin($dbc, $email = '', $pass = '') {
 	if (empty($errors)) { // If everything's OK.
 
 		// Retrieve the user_id and username for that email/password combination:
-		$query = "SELECT user_id, username, displayName, isAdmin, pfpURL FROM users WHERE email='$email' AND pass=SHA2('$p',256)";		
+		$query = "SELECT user_id, username, displayName, isAdmin, pfpURL, spotify_refresh_token FROM users WHERE email='$email' AND pass=SHA2('$p',256)";		
 		$result = @mysqli_query($dbc, $query); // Run the query.
 		
 		// Check the result:
