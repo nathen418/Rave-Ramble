@@ -85,6 +85,12 @@ $dotenv->load();
 			color: white;
 			border-radius: 10px
 		}
+		#pfp-stats-card {
+			background-color: #16181c;
+			color: white;
+			border-radius: 10px
+		}
+		
 
 		#suggested-follow-card {
 			background-color: #16181c;

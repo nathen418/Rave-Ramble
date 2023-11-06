@@ -4,7 +4,6 @@ $dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__));
 $dotenv->load();
 session_start();
 if (!array_key_exists('user_id', $_SESSION)) {
-    echo 'no user id';
     header('Location: ../signin.php');
     die();
 }
