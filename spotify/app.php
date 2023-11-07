@@ -29,6 +29,24 @@ if (!isset($_SESSION['spotifyAccessToken'])) {
     $api->setAccessToken($_SESSION['spotifyAccessToken']);
 }
 
+function refreshToken(){
+    $session = new SpotifyWebAPI\Session(
+        $_ENV['SPOTIFY_CLIENT_ID'],
+        $_ENV['SPOTIFY_CLIENT_SECRET'],
+        $_ENV['SPOTIFY_REDIRECT_URI']
+    );
+    $api = new SpotifyWebAPI\SpotifyWebAPI();
+    if (!isset($_SESSION['spotifyAccessToken'])) {
+        $session->refreshAccessToken($_SESSION['spotifyRefreshToken']);
+        echo $_SESSION['spotifyRefreshToken'];
+        $newAccessToken = $session->getAccessToken();
+        $_SESSION['spotifyAccessToken'] = $newAccessToken;
+         
+     } else {
+         $api->setAccessToken($_SESSION['spotifyAccessToken']);
+     }
+}
+
 function getSpotifyUser($api)
 {
     $user = $api->me();

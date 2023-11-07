@@ -25,20 +25,20 @@ include('header.php');
 
                             <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Sign into your account</h5>
 
-                            <div class="form-outline mb-4">
+                            <div class=" mb-4">
                                 <input type="email" name="email" class="form-control form-control-lg" placeholder="Email address" />
                             </div>
 
-                            <div class="form-outline mb-4">
+                            <div class=" mb-4">
                                 <input type="password" name="pass" class="form-control form-control-lg" placeholder="Password" />
                             </div>
 
                             <div class="pt-1 mb-4">
-                                <button class="btn btn-dark btn-lg btn-block" type="submit">Sign In</button>
+                                <button class="btn btn-primary btn-lg btn-block" type="submit">Sign In</button>
                             </div>
 
                             <a class="small text-muted" href="../resetpassword.php">Forgot password?</a>
-                            <p class="mb-5 pb-lg-2" style="color: #393f81;">Don't have an account? <a href="../register.php" style="color: #393f81;">Register here</a></p>
+                            <p class="small text-muted">Don't have an account? <a href="../register.php" style="color: #393f81;">Register here</a></p>
                             <?php
                             // Print any error messages, if they exist:
                             if (isset($errors) && !empty($errors)) {
@@ -52,7 +52,6 @@ include('header.php');
                             <a href="terms.php" class="small text-muted">Terms of use.</a>
                             <a href="privacy.php" class="small text-muted">Privacy policy</a>
                         </form>
-
                     </div>
                 </div>
             </div>

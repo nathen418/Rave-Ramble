@@ -27,7 +27,7 @@
     ?>
 </div>
 <div id="pfp-stats-card" class="card-body mt-3" style="border-radius: 10px">
-    <h5 class="card-title">Your top 5 genres:</h5>
+    <h6 class="card-title">Your top 5 genres:</h6>
     <?php
 
     $topArtists = getSpotifyTop($api, 'genres', ['limit' => 5 ]);

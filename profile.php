@@ -143,7 +143,7 @@ $errors = array();
                     <li><i class="far fa-comment"></i><span class="small ps-2"><?php echo $row['post_comments'] ?></span></li>
                     <li><i class="far fa-heart"></i><span class="small ps-2"><?php echo $row['post_likes'] ?></span></li>
                     <li>
-                        <a href="<?php echo $row['post_permalink'] ?>"></a><i class="far fa-share-square"></i>
+                        <a href="<?php echo $row['post_permalink'] ?>"><i class="far fa-share-square"></i></a>
                     </li>
                 </ul>
             </div>

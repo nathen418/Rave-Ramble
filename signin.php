@@ -1,11 +1,13 @@
-<?php # Script 12.12 - signin.php #4
-// This page processes the signin form submission.
-// The script now stores the HTTP_USER_AGENT value for added security.
-
+<?php
+session_start(); // Start the session.
+if (isset($_SESSION['user_id'])) {	
+	// Need the functions:
+	require ('includes/signin_functions.inc.php');
+	redirect_user();	
+}
 // Check if the form has been submitted:
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-	// Need two helper files:
 	require ('includes/signin_functions.inc.php');
 	require $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 	require ('mysqli_connect.php');

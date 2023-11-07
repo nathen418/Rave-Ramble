@@ -17,8 +17,7 @@ $session = new SpotifyWebAPI\Session(
 
 $state = $_GET['state'];
 
-// Fetch the stored state value from somewhere. A session for example
-
+// Fetch the stored state value from somewhere.
 if ($state !== $_SESSION['spotifyState']) {
     // The state returned isn't the same as the one we've stored, we shouldn't continue
     die('State mismatch');
@@ -33,7 +32,6 @@ $refreshToken = $session->getRefreshToken();
 // Store the access and refresh tokens in the db
 $query = "UPDATE `users` SET spotify_refresh_token = '$refreshToken' WHERE users.`user_id` = '$_SESSION[user_id]';";
 $result = @mysqli_query($dbc, $query);
-
 
 
 // Send the user along and fetch some data!

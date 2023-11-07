@@ -125,66 +125,6 @@ $dotenv->load();
 			color: #cb31ce;
 		}
 	</style>
-	<!-- <style>
-		body {
-			display: flex;
-			flex-direction: row;
-			 justify-content: space-between;
-			/* other styles */
-			background: #ced4da;
-			height: 100%;
-		}
-
-		#left-sidebar{
-			flex: 1;
-			width: 20vw;
-			height: 100vh;
-			position: sticky;
-			/* other styles */
-		}
-		#right-sidebar {
-			flex: 1;
-			width: 20vw;
-			height: 100vh;
-			position: sticky;
-			/* other styles */
-		}
-
-
-		
-
-		alert-position {
-			position: fixed;
-			top: 0;
-			width: 100%;
-		}
-
-		main {
-			height: 100vh;
-			/* 100% of the viewport height */
-			overflow-y: auto;
-			/* Enable vertical scrolling when the content exceeds the height */
-		}
-
-		.post-container {
-			max-height: 100vh;
-			/* Adjust the height as needed */
-			overflow-y: auto;
-		}
-
-		.card-body {
-			border-radius: 10px;
-			background-color: #f8f9fa;
-		}
-
-		.btn-dark {
-			background-color: #7151a9;
-		}
-
-		.btn-primary {
-			background-color: #7151a9;
-		}
-	</style> -->
 </head>
 
 <body>
