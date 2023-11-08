@@ -82,17 +82,24 @@ $errors = array();
                 </div>
             </div>
             <div id="suggested-follow-card" class="card-body mt-3" style="border-radius: 10px">
-                    <h5 class="card-title">Events Coming Up:</h5>
-                    <ul>
-                        <li>Person 1: <?php ?></li>
-                        <li>Person 2: <?php ?></li>
-                        <li>Person 3: <?php ?></li>
-                        <li>Person 4: <?php ?></li>
-                        <li>Person 5: <?php ?></li>
-                        <li>Person 6: <?php ?></li>
-
-                    </ul>
+                <h5 class="card-title">Events Coming Up:</h5>
+                <div id="event-list">
+                    <!-- Loop through and display events here -->
+                    <?php
+                    $query = "SELECT * FROM events ORDER BY 'event_date' ASC LIMIT 10";
+                    $result = mysqli_query($dbc, $query);
+                    $events = mysqli_fetch_all($result, MYSQLI_ASSOC);
+                    // Replace this with your PHP code to fetch and display events
+                    foreach ($events as $event) {
+                        echo '<div class="event mb-1">
+                        <h6>' . $event['event_name'] . '</h6>
+                        <p>' . $event['event_date'] . '</p>
+                        <a href="' . $event['ticketmaster_link'] . '" target="_blank"><p>' . $event['event_location'] . '</p></a>
+                      </div>';
+                    }
+                    ?>
                 </div>
+            </div>
         </nav>
     </div>
     <div class="col">
@@ -156,32 +163,16 @@ $errors = array();
                 <?php if ((isset($_SESSION['user_id']))) {
                     include('pfpstatsbox.php');
                 } ?>
-                <div id="events-card" class="card-body mt-3" style="border-radius: 10px">
-                    <h5 class="card-title">What's Happening Near You</h5>
-                    <ul>
-                        <li>Event 1: <?php // Get events
-                                        ?></li>
-                        <li>Event 2: <?php // Get events
-                                        ?></li>
-                        <li>Event 3: <?php // Get events
-                                        ?></li>
-                        <li>Event 4: <?php // Get events
-                                        ?></li>
-                        <li>Event 5: <?php // Get events
-                                        ?></li>
-                        <li>Event 6: <?php // Get events
-                                        ?></li>
-                    </ul>
-                </div>
                 <div id="suggested-follow-card" class="card-body mt-3" style="border-radius: 10px">
-                    <h5 class="card-title">Suggested Community Members & Artists</h5>
+                    <h5 class="card-title">Suggested & Artists</h5>
                     <ul>
-                        <li>Person 1: <?php ?></li>
-                        <li>Person 2: <?php ?></li>
-                        <li>Person 3: <?php ?></li>
-                        <li>Person 4: <?php ?></li>
-                        <li>Person 5: <?php ?></li>
-                        <li>Person 6: <?php ?></li>
+                        <li>Afrojak</li>
+                        <li>Zeds Ded</li>
+                        <li>Grizz</li>
+                        <li>DJ DIESEL</li>
+                        <li>Subtronix</li>
+                        <li>Woolie</li>
+                    </ul>
 
                     </ul>
                 </div>

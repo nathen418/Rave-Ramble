@@ -61,50 +61,53 @@ $errors = array();
                     </ul>
                     <!-- Include the dropdown button at the bottom of the sidebar. show only if logged in-->
                     <?php if (isset($_SESSION['user_id'])) { ?>
-                        <div class=" dropdown mt-auto">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <!-- Fix the dropdown and pin to bottom of navbar -->
-                                <i class="fa-solid fa-gear"></i>
-                                Your Profile
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <li><a class="dropdown-item" href="#">Action</a></li>
-                                <li><a class="dropdown-item" href="#">Another action</a></li>
-                                <li><a class="dropdown-item" href="#">Something else here</a></li>
-                            </ul>
-                        </div>
+                    <div class=" dropdown mt-auto">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <!-- Fix the dropdown and pin to bottom of navbar -->
+                            <i class="fa-solid fa-gear"></i>
+                            Your Profile
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <li><a class="dropdown-item" href="#">Action</a></li>
+                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        </ul>
+                    </div>
                     <?php } else { ?>
-                        <a class="btn btn-primary" href="/signin.php" role="button">Sign In</a>
-                        <a class="btn btn-secondary" href="/register.php" role="button">Register</a>
+                    <a class="btn btn-primary" href="/signin.php" role="button">Sign In</a>
+                    <a class="btn btn-secondary" href="/register.php" role="button">Register</a>
                     <?php } ?>
                 </div>
             </div>
             <div id="events-card" class="card-body mt-3" style="border-radius: 10px">
                 <h5 class="card-title">What's Happening Near You</h5>
-                <ul>
-                    <li>Event 1: <?php // Get events
-                                    ?></li>
-                    <li>Event 2: <?php // Get events
-                                    ?></li>
-                    <li>Event 3: <?php // Get events
-                                    ?></li>
-                    <li>Event 4: <?php // Get events
-                                    ?></li>
-                    <li>Event 5: <?php // Get events
-                                    ?></li>
-                    <li>Event 6: <?php // Get events
-                                    ?></li>
-                </ul>
+                <div id="event-list">
+                    <!-- Loop through and display events here -->
+                    <?php
+                    $query = "SELECT * FROM events ORDER BY 'event_date' ASC LIMIT 10";
+                    $result = mysqli_query($dbc, $query);
+                    $events = mysqli_fetch_all($result, MYSQLI_ASSOC);
+                    // Replace this with your PHP code to fetch and display events
+                    foreach ($events as $event) {
+                        echo '<div class="event mb-1">
+                        <h6>' . $event['event_name'] . '</h6>
+                        <p>' . $event['event_date'] . '</p>
+                        <a href="' . $event['ticketmaster_link'] . '" target="_blank"><p>' . $event['event_location'] . '</p></a>
+                      </div>';
+                    }
+                    ?>
+                </div>
             </div>
             <div id="suggested-follow-card" class="card-body mt-3" style="border-radius: 10px">
-                <h5 class="card-title">Suggested Community Members & Artists</h5>
+                <h5 class="card-title">Suggested & Artists</h5>
                 <ul>
-                    <li>Person 1: <?php ?></li>
-                    <li>Person 2: <?php ?></li>
-                    <li>Person 3: <?php ?></li>
-                    <li>Person 4: <?php ?></li>
-                    <li>Person 5: <?php ?></li>
-                    <li>Person 6: <?php ?></li>
+                    <li>Afrojak</li>
+                    <li>Zeds Ded</li>
+                    <li>Grizz</li>
+                    <li>DJ DIESEL></li>
+                    <li>Subtronix</li>
+                    <li>Woolie</li>
                 </ul>
             </div>
         </nav>
@@ -125,20 +128,33 @@ $errors = array();
                 <?php if ((isset($_SESSION['user_id']))) {
                     include('postbox.php');
                 } ?>
-                <div id="post-card" class="card-body mt-3" style="border-radius:10px">
-                    <p> Global Top Artists: </p>
-                    <div class="mb-3">
-                        <?php
-                        // get the global top artists
-                        $topArtists[] = [];
-                        for ($i = 0; $i < 4; $i++) {
-                            echo "<div class=\"col align-center mt-2 \">";
-                            echo "<img class=\"me-3\" src=\"" . $topArtists[1][$i] . "\" height=\"50\" loading=\"lazy\" />";
-                            echo $topArtists[0][$i];
-                            echo "</div>";
-                        }
-                        ?>
-                    </div>
+                <div id="pfp-stats-card" class="card-body mt-3" style="border-radius: 10px">
+                    <h5 class="card-title">Global top 5 artists:</h5>
+                    <?php
+
+                    $topArtists = getSpotifyTop($api, 'artists', ['limit' => 5]);
+                    for ($i = 0; $i < 5; $i++) {
+                        echo "<div class=\"col align-center mt-1\">";
+                        echo "<img src=\"" . $topArtists[1][$i] . "\" height=\"50\" loading=\"lazy\" />";
+                        echo "   " . $topArtists[0][$i];
+                        echo "</div>";
+                    }
+                    ?>
+                </div>
+                <div id="pfp-stats-card" class="card-body mt-3 me-2" style="border-radius: 10px">
+                    <h5 class="card-title">Global top 5 tracks:</h5>
+                    <?php
+
+                    $topTracks = getSpotifyTop($api, 'tracks', ['limit' => 5]);
+                    for ($i = 0; $i < 5; $i++) {
+                        echo "<div class=\"col align-center mt-1 me-2\">";
+                        echo "<a class=\"username\" href=\"" . $topTracks[3][$i] . "\">";
+                        echo "<img src=\"" . $topTracks[2][$i] . "\" height=\"50\" loading=\"lazy\" />";
+                        echo "   " . $topTracks[0][$i];
+                        echo "</a>";
+                        echo "</div>";
+                    }
+                    ?>
                 </div>
             </div>
         </nav>

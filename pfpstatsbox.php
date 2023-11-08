@@ -26,16 +26,16 @@
     }
     ?>
 </div>
-<div id="pfp-stats-card" class="card-body mt-3" style="border-radius: 10px">
+<!-- <div id="pfp-stats-card" class="card-body mt-3" style="border-radius: 10px">
     <h6 class="card-title">Your top 5 genres:</h6>
     <?php
 
-    $topArtists = getSpotifyTop($api, 'genres', ['limit' => 5 ]);
-    for ($i = 0; $i < 5; $i++) {
-        echo "<div class=\"col align-center \">";
-        echo "<img src=\"" . $topArtists[1][$i] . "\" height=\"50\" loading=\"lazy\" />";
-        echo $topArtists[0][$i];
-        echo "</div>";
-    }
+    // $topArtists = getSpotifyTop($api, 'genres', ['limit' => 5 ]);
+    // for ($i = 0; $i < 5; $i++) {
+    //     echo "<div class=\"col align-center \">";
+    //     echo "<img src=\"" . $topArtists[1][$i] . "\" height=\"50\" loading=\"lazy\" />";
+    //     echo $topArtists[0][$i];
+    //     echo "</div>";
+    // }
     ?>
-</div>
+</div> -->
