@@ -8,7 +8,6 @@ Developed as a capstone project for INFOST 490 at the University of
 </p>
 
 <p align="center">
-<a href="https://github.com/simple-icons/simple-icons/actions?query=workflow%3AVerify+branch%3Adevelop"><img src="https://img.shields.io/github/actions/workflow/status/simple-icons/simple-icons/verify.yml?branch=develop&logo=github&label=tests" alt="Build status"/></a>
 
 </p>
 
